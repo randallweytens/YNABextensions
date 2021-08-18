@@ -1,21 +1,29 @@
+from dotenv.main import dotenv_values
 import requests
 import os
 import json
-from decouple import config
+from dotenv import load_dotenv
 
 #ynab api endpoints
 #https://api.youneedabudget.com/v1
 
+#imports variables from .env into the environment
+#load_dotenv(dotenv_path="conf/.env",verbose=True)
+
 #print(os.environ)
 
-#token = os.environ['ynab_token']
+#token = os.environ.get("YNAB_TOKEN")
 
-#os.environ
+#load the .env file into a config dict
+config = dotenv_values(dotenv_path="conf/.env",verbose=True)
 
-token = config('ynab_token')
+token = config["YNAB_TOKEN"]
 
-print(token)
+#print(config["YNAB_TOKEN"])
 
+#print(token)
+
+#build the request header
 headers = {'Authorization': 'Bearer ' + token}
 
 my_response = requests.get('https://api.youneedabudget.com/v1/budgets',headers=headers)

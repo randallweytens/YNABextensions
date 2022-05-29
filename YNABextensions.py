@@ -4,8 +4,9 @@ import os
 import json
 from dotenv import load_dotenv
 
-#ynab api endpoints
+#base ynab api endpoint
 #https://api.youneedabudget.com/v1
+ynab_url = "https://api.youneedabudget.com/v1"
 
 #imports variables from .env into the environment
 #load_dotenv(dotenv_path="conf/.env",verbose=True)
@@ -26,7 +27,10 @@ token = config["YNAB_TOKEN"]
 #build the request header
 headers = {'Authorization': 'Bearer ' + token}
 
-my_response = requests.get('https://api.youneedabudget.com/v1/budgets',headers=headers)
+#build the request url
+get_ynab_url = ynab_url + "/budgets"
+
+my_response = requests.get(get_ynab_url,headers=headers)
 
 budgets = my_response.json()
 
@@ -48,7 +52,10 @@ for budget in budgets["data"]["budgets"]:
 
 #print(budgets["data"]["budgets"]{"id"})
 
-my_response = requests.get(f"https://api.youneedabudget.com/v1/budgets/{budget_id}/accounts",headers=headers)
+get_ynab_url = ynab_url + "/budgets/" + budget_id + "/accounts"
+
+#my_response = requests.get(f"https://api.youneedabudget.com/v1/budgets/{budget_id}/accounts",headers=headers)
+my_response = requests.get(get_ynab_url,headers=headers)
 
 accounts = my_response.json()
 
